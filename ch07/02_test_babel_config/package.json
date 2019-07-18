@@ -1,0 +1,21 @@
+{
+  "name": "02_test_babel_config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prod": "cross-env NODE_ENV=production babel ./src/example-env"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/plugin-transform-template-literals": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-preset-minify": "^0.5.0",
+    "cross-env": "^5.2.0"
+  }
+}
