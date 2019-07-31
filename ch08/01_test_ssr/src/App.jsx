@@ -1,6 +1,13 @@
 import React, {useState, useEffect} from 'react';
+import styled from 'styled-components';
+
 import Home from './Home';
 import About from './About';
+
+const Container = styled.div`
+  background-color: #aaaaaa;
+  border: 1px solid blue;
+`;
 
 const App = ({ page:indexPage }) => {
   const [page, setPage] = useState(indexPage);
@@ -19,11 +26,11 @@ const App = ({ page:indexPage }) => {
 
   const PageComponent = page === 'home' ? Home: About
   return (
-    <div className="container">
+    <Container>
       <button data-page="home" onClick={onChangePage}>Home</button>
       <button data-page="about" onClick={onChangePage}>About</button>
       <PageComponent />
-    </div>
+    </Container>
   )
 }
 
