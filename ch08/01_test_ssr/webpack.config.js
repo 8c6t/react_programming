@@ -15,6 +15,9 @@ module.exports = {
       {
         test: /\.jsx$/,
         loader: 'babel-loader',
+        options: {
+          configFile: path.resolve(__dirname, '.babelrc.client.js'),
+        }
       },
     ],
   },
@@ -27,5 +30,6 @@ module.exports = {
   output: {
     filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/',
   },
 };
