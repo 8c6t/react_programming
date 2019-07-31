@@ -2,4 +2,5 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-ReactDOM.render(<App page="home" />, document.getElementById('root'));
+const initialData = window.__INITIAL_DATA__;
+ReactDOM.render(<App page={initialData.page} />, document.getElementById('root'));
