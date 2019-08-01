@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Icon from '../static/icon.png';
 
 const Page1 = () => {
   return (
@@ -6,7 +7,7 @@ const Page1 = () => {
       <p>This is home page</p>
       <Head>
         <title>page1</title>
-        <img src="/static/icon.png" />
+        <img src={Icon} />
         <Head>
           <meta name="description" content="hello world" />
         </Head>
