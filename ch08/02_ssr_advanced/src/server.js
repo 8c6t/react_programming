@@ -1,13 +1,15 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-import { renderToString } from 'react-dom/server';
-import React from 'react';
 import * as url from 'url';
-import { ServerStyleSheet } from 'styled-components';
+import lruCache from 'lru-cache';
 
-import App from './App';
 import { renderPage, prerenderPages } from './common';
+
+const ssrCache = new lruCache({
+  max: 100,
+  maxAge: 1000 * 60,
+});
 
 const app = express();
 
@@ -25,12 +27,23 @@ app.use('/dist', express.static('dist'));
 app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 app.get('*', (req, res) => {
   const parsedUrl = url.parse(req.url, true);
+
+  const cacheKey = parsedUrl.path;
+  if (ssrCache.has(cacheKey)) {
+    console.log(cacheKey, '캐시 사용');
+    res.send(ssrCache.get(cacheKey));
+    return;
+  } else {
+    console.log(cacheKey, '캐시 미사용');
+  }
+  
   const page = parsedUrl.pathname && parsedUrl.pathname !== '/' ? parsedUrl.pathname.substr(1) : 'home';
   const initialData = { page };
   const pageHtml = prerenderPages.includes(page)
     ? prerenderHtml[page]
     : renderPage(page);
   const result = pageHtml.replace('__DATA_FROM_SERVER__', JSON.stringify(initialData));
+  ssrCache.set(cacheKey, result);
   res.send(result);
 });
 
