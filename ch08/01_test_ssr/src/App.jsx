@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Home from './Home';
 import About from './About';
+import Icon from './icon.png';
 
 const Container = styled.div`
   background-color: #aaaaaa;
@@ -30,6 +31,7 @@ const App = ({ page:indexPage }) => {
       <button data-page="home" onClick={onChangePage}>Home</button>
       <button data-page="about" onClick={onChangePage}>About</button>
       <PageComponent />
+      <img src={Icon} />
     </Container>
   )
 }
