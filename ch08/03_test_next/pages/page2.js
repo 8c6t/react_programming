@@ -1,8 +1,15 @@
 import { callApi } from '../src/api';
+import Router from 'next/router';
 
 const Page2 = ({ text, data, userAgent }) => {
+
+  const onClick = () => {
+    Router.push('/page1');
+  }
+
   return (
     <div>
+      <button onClick={onClick}>page1로 이동</button>
       <p>this is home page2</p>
       <p>{`text: ${text}`}</p>
       <p>{`data is ${data}`}</p>
