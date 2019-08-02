@@ -2,6 +2,7 @@ const express = require('express');
 const next = require('next');
 const url = require('url');
 const lruCache = require('lru-cache');
+const fs = require('fs');
 
 const ssrCache = new lruCache({
   max: 100,
@@ -30,6 +31,22 @@ app.prepare().then(() => {
   });
 });
 
+const prerenderList = [
+  { name: 'page1', path: '/page1' },
+  { name: 'page2-hello', path: '/page2?text=hello' },
+  { name: 'page2-world', path: '/page2?text=world' },
+];
+
+const prerenderCache = {};
+
+if (!dev) {
+  for (const info of prerenderList) {
+    const { name, path } = info;
+    const html = fs.readFileSync(`./out/${name}.html`, 'utf8');
+    prerenderCache[path] = html;
+  }
+}
+
 const renderAndCache = async (req, res) => {
   const parsedUrl = url.parse(req.url, true);
   const cacheKey = parsedUrl.path;
@@ -37,6 +54,12 @@ const renderAndCache = async (req, res) => {
   if (ssrCache.has(cacheKey)) {
     console.log('캐시 사용');
     res.send(ssrCache.get(cacheKey));
+    return;
+  }
+
+  if (prerenderCache.hasOwnProperty(cacheKey)) {
+    console.log('미리 렌더링한 HTML 사용');
+    res.send(prerenderCache[cacheKey]);
     return;
   }
 
