@@ -19,6 +19,7 @@ const Page2 = ({ text, data, userAgent }) => {
 }
 
 Page2.getInitialProps = async ({ query, req }) => {
+  // throw new Error('exception in getInitialProps');
   const text = query.text || 'none';
   const data = await callApi();
   const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
