@@ -1,14 +1,15 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getNextFriend } from '../../common/mockData';
 import { addFriend } from '../state';
-import { getFriendsWithAgeLimit } from '../state/selector';
+import { makeGetFriendsWithAgeLimit } from '../state/selector';
 
 import FriendList from '../component/FriendList';
 
 const FriendMain = memo((props) => {
   const dispatch = useDispatch();
+  const getFriendsWithAgeLimit = useMemo(makeGetFriendsWithAgeLimit, []);
 
   const friendsWithAgeLimit = useSelector(state => getFriendsWithAgeLimit(state, props));
 
