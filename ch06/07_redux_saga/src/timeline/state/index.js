@@ -10,6 +10,8 @@ export const types = {
   ADD_LIKE: 'timeline/ADD_LIKE',
   SET_LOADING: 'timeline/SET_LOADING',
   SET_ERROR: 'timeline/SET_ERROR',
+  SET_TEXT: 'timelines/SET_TEXT',
+  TRY_SET_TEXT: 'timelines/TRY_SET_TEXT',
 };
 
 export const actions = {
@@ -21,6 +23,8 @@ export const actions = {
   addLike: (timelineId, value) => ({ type: types.ADD_LIKE, timelineId, value }),
   setLoading: isLoading => ({ type: types.SET_LOADING, isLoading }),
   setError: error => ({ type: types.SET_ERROR, error }),
+  setText: text => ({ type: types.SET_TEXT, text }),
+  trySetText: text => ({ type: types.TRY_SET_TEXT, text}),
 }
 
 const INITIAL_STATE = { nextPage: 0, isLoading: false, error: '' };
@@ -37,7 +41,8 @@ const reducer = createReducer(INITIAL_STATE, {
     }
   },
   [types.SET_LOADING]: (state, action) => (state.isLoading = action.isLoading),
-  [types.SET_ERROR]: (state, action) => (state.error = action.error)
+  [types.SET_ERROR]: (state, action) => (state.error = action.error),
+  [types.SET_TEXT]: (state, action) => (state.text = action.text),
 });
 
 const reducers = [reducer, timelinesReducer];
