@@ -12,7 +12,7 @@ describe('fetchData', () => {
   expect(gen.next().value).toEqual(take(types.REQUEST_LIKE));
   expect(gen.next(action).value).toEqual(put(actions.setLoading(true)));
   expect(gen.next().value).toEqual(put(actions.addLike(timeline.id, 1)));
-  expect(gen.next(action).value).toEqual(put(actions.setError('')));
+  expect(gen.next().value).toEqual(put(actions.setError('')));
 
   expect(gen.next().value).toEqual(call(callApiLike));
   it('on success callApiLike', () => {
