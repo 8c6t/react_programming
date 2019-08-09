@@ -6,7 +6,7 @@ import TimelineList from '../component/TimelineList';
 
 const TimelineMain = () => {
   const dispatch = useDispatch();
-  const { timelines, isLoading } = useSelector(state => state.timeline);
+  const { timelines, isLoading, error } = useSelector(state => state.timeline);
 
   const onAdd = () => {
     const timeline = getNextTimeline();
@@ -25,6 +25,7 @@ const TimelineMain = () => {
       <button onClick={onAdd}>타임라인 추가</button>
       <TimelineList timelines={timelines} onLike={onLike} />
       {!!isLoading && <p>전송 중...</p>}
+      {!!error && <p>에러 발생: {error}</p>}
     </div>
   );
 }
